@@ -1,0 +1,13 @@
+﻿@model Tire
+
+@{ 
+    var lst = Enum.GetValues(typeof(TireStatus)).Cast<TireStatus>().Select(x=> new SelectListItem { 
+        Text = x.ToString(),
+        Value = x.ToString(),
+        Selected = Model.SelectedStatus == (int)x
+    }).ToList();
+}
+
+<label>@Html.DisplayFor(x => x.Name)</label>
+@Html.DropDownList("BindingValue", lst, "-- Select status --")
+

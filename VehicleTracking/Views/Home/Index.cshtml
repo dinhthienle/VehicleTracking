@@ -1,0 +1,66 @@
+﻿@model VehicleModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model.LandVehicles != null)
+{
+
+    <h3>Land Vehicles</h3>
+    <ul class="nav nav-tabs">
+        @foreach (var item in Model.LandVehicles)
+        {
+            <li class="@(Model.LandVehicles.IndexOf(item) == 0 ? "active" : "")"><a data-toggle="tab" href="#@item.Name">@item.Name</a></li>
+        }
+    </ul>
+    @using (Html.BeginForm("SaveLandVehicles", "Home", FormMethod.Post))
+    {
+        <div class="tab-content">
+            @for (int i = 0; i < Model.LandVehicles.Count; i++)
+            {
+                <div id="@Model.LandVehicles[i].Name" class="tab-pane @(Model.LandVehicles.IndexOf(Model.LandVehicles[i]) == 0 ? "fade in active" : "fade")">
+                    <h3>@Model.LandVehicles[i].Name</h3>
+                    <div class="col-sm-12">
+                        <label>Fuel</label>
+                        @Html.TextBoxFor(x => x.LandVehicles[i].Fuel)
+                    </div> 
+                    <div class="col-sm-12">
+                        @Html.EditorFor(x => x.LandVehicles[i].Tires)
+                    </div>                    
+                </div>
+            }
+            <input type="submit" value="Submit" />
+        </div>
+    }
+}
+
+@if (Model.SeaVehicles != null)
+{
+    <br />
+    <hr />
+    <h3>Sea Vehicles</h3>
+    <ul class="nav nav-tabs">
+        @foreach (var item in Model.SeaVehicles)
+        {
+            <li><a class="@(Model.SeaVehicles.IndexOf(item) == 0 ? "active" : "")" data-toggle="tab" href="#@item.Name">@item.Name</a></li>
+        }
+    </ul>
+
+    @using (Html.BeginForm("SaveSeaVehicles", "Home", FormMethod.Post))
+    {
+        <div class="tab-content">
+            @for (int i = 0; i < Model.SeaVehicles.Count; i++)
+            {
+            <div id="@Model.SeaVehicles[i].Name" class="tab-pane @(Model.LandVehicles.IndexOf(Model.LandVehicles[i]) == 0 ? "fade in active" : "fade")">
+                <h3>@Model.SeaVehicles[i].Name</h3>                
+                <div class="col-sm-12">
+                    <label>Fuel</label>
+                    @Html.TextBoxFor(x => x.SeaVehicles[i].Fuel)
+                </div>
+            </div>
+            }
+            <input type="submit" value="Submit" />
+        </div>
+    }
+}
